@@ -1,0 +1,57 @@
+# fly.toml file generated for oaspyer on 2022-12-26T12:19:42+08:00
+
+kill_signal = "SIGINT"
+kill_timeout = 120
+processes = []
+
+[build]
+  # 指定 Dockerfilex
+  dockerfile = "Dockerfile"
+
+[env]
+  # 请使用 fly secrets set PASSWORD=""
+  # PASSWORD=""
+
+
+[[services]]
+  internal_port = 443
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = "443"
+
+  [services.concurrency]
+    hard_limit = 70
+    soft_limit = 50
+    type = "connections"
+    
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+[[services]]
+  internal_port = 5300
+  protocol = "udp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 5300
+
+[[services]]
+  internal_port = 53
+  protocol = "udp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 53
+
